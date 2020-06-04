@@ -73,7 +73,7 @@ void GCPM(float *x, float *y, float *z, int *year, int *doy, float *ut,
 	int i;
 	for (i=0;i<n;i++) {
 		if (Verbose) {
-			printf("Calculating %6.2f%%\n",((float) 100 * (i+1))/n);
+			printf("\rCalculating %6.2f%%",((float) 100 * (i+1))/n);
 		}
 		itime[0] = itime0[i];
 		itime[1] = itime1[i];
@@ -85,6 +85,6 @@ void GCPM(float *x, float *y, float *z, int *year, int *doy, float *ut,
 		nO[i] = tmp[3];
 	}
 	if (Verbose) {
-		printf("Calculating %6.2f%%\n",100.0);
+		printf("\rCalculating %6.2f%%\n",100.0);
 	}
 }
