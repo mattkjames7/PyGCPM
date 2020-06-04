@@ -34,9 +34,6 @@ except:
 	libgcpm = ct.CDLL(libpath+"libgcpm.so")
 
 
-void GCPM(float *x, float *y, float *z, int *year, int *doy, float *ut, 
-	float *kp, int n, float *ne, float *nH, float *nHe, float *nO,
-	int Verbose)
 
 #define the functions and their arguments
 #This is the model wrapper function

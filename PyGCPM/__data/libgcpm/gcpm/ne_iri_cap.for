@@ -88,4 +88,3 @@ c
 c	  print*,'leaving cap:',ne_iri_cap
 	return
 	end
-

@@ -2,7 +2,7 @@ import numpy as np
 from ._CFunctions import _Cgcpm
 import DateTimeTools as TT
 
-def GCPM(x,y,z,Date,ut,Kp=1.0,Verbose=True):
+def GCPM(x,y,z,Date,ut,Kp=1.0,Verbose=False):
 	'''
 	Calculates the Global Core Plasma Model at some given position(s)
 	and time(s).
@@ -23,6 +23,8 @@ def GCPM(x,y,z,Date,ut,Kp=1.0,Verbose=True):
 		ut = hh + mm/60.0 + ss/3600.0
 	Kp : float
 		Kp index (or indices)
+	Verbose : bool
+		If True, model calculation progress will be displayed
 		
 	Returns
 	=======
