@@ -749,11 +749,17 @@ C ---------------------------------------------------------------
 C       Open coefficient file. Read past first header record.        
 C       Read degree and order of model and Earth's radius.           
 C ---------------------------------------------------------------               
+       CHARACTER(512) :: libpath
+       INTEGER :: nlp
+       CALL getlibpath(libpath,nlp)
        WRITE(FOUT,667) FSPEC
+
 c special for IRIWeb version
 c 667  FORMAT('/usr/local/etc/httpd/cgi-bin/models/IRI/',A12)
 667    FORMAT(A12)
-       OPEN (IU, FILE=FOUT, STATUS='OLD', IOSTAT=IER, ERR=999)     
+
+       OPEN (IU, FILE=TRIM(libpath) // 'iri/' // FOUT, STATUS='OLD',  
+     1    IOSTAT=IER,  ERR=999)     
 
        READ (IU, *, IOSTAT=IER, ERR=999) 
         READ (IU, *, IOSTAT=IER, ERR=999) NMAX, ERAD 

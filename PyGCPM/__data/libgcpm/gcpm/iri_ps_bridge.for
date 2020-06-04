@@ -123,7 +123,7 @@ c	  print*,'No bridge required, istat=-1 ',al,r2
 
 	eqh=(al-1.0)*re
 c	  print*,'bridge=',ah1,ah2,eqh,transh,antransh
-	  print*,'      =',an1,an2,eq_iri_ps_trough
+c	  print*,'      =',an1,an2,eq_iri_ps_trough
       alpha=-alog10(an1/an2)/alog10(ah1/ah2)
       ano=an1*ah1**alpha
 c	  print*,'intial alpha,ano:',alpha,ano

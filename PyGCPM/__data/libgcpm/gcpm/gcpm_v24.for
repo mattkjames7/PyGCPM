@@ -41,6 +41,8 @@ ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 	real*4 pn(72,10),ps(72,10),ne_iri_cap
 	integer*4 itime(2)
 	data re/6371.0/,degrad/0.01745329/
+    
+
 
 c poleward auroral edge
        DATA PN/73.6,73.8,74.0,74.2,74.6,74.8,75.0,75.1,75.3,75.4,75.5,75
@@ -170,6 +172,12 @@ c
 	data oldmlt/-1.0/,oldkp/-1.0/
 
 	common /irioutput/ rz12,f107
+
+      CHARACTER(512) :: libpath
+      INTEGER :: nlp
+      CALL getlibpath(libpath,nlp)
+
+
 c
 c  altrans = the half width in L-shell of over which the transition
 c            takes place between the trough and polar cap models.
@@ -213,7 +221,7 @@ c  will be made from the trough/plasmasphere model to the polar cap model.
 	  aurora_mlat=alatcritn
 	  tranlow=alcrit-altrans
 	  tranhigh=alcrit+altrans
-	  print*,'auroral zone:',alcrit,altrans,tranlow,tranhigh
+c	  print*,'auroral zone:',alcrit,altrans,tranlow,tranhigh
 	endif
 
 c  We need to obtain the L-shell of the location given, while limiting
@@ -224,7 +232,7 @@ c  acceptable L-shell value, without causing problems.
 	if(clat.lt.1.0e-5) clat=1.0e-5
 	al=r/clat
 	aheight=(r-1.0)*re
-	  print*,'setup:',r,alatr,al,aheight,tranlow,tranhigh,altrans,alcrit
+c	  print*,'setup:',r,alatr,al,aheight,tranlow,tranhigh,altrans,alcrit
 
 c  The model contains elements for the plasmasphere and plasmapause, the
 c  trough, and the polar cap.  The IRI is used for the ionosphere.

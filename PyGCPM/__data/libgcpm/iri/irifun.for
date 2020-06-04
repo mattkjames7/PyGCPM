@@ -5783,6 +5783,9 @@ c----------------------------------------------------------------
            integer      imst,iymend
            real         ionoindx(722),indrz(722)
            real         ig(3),rz(3)
+           CHARACTER(512) :: libpath
+           INTEGER :: nlp
+           
 
            common /iounit/konsol,monito
 
@@ -5818,9 +5821,11 @@ C Starting from six months before the UPDATE DATE (listed at the top of
 c the file) and onward the indices are therefore based on indices 
 c predictions.
 c
+        CALL getlibpath(libpath,nlp)
         if(iflag.eq.0) then
       
-          open(unit=12,file='ig_rz.dat',status='old')
+          open(unit=12,file=TRIM(libpath) // 'iri/' // 'ig_rz.dat',
+     1  status='old')
 c-web- special for web version
 c          open(unit=12,file=
 c     *'/usr/local/etc/httpd/cgi-bin/models/IRI/ig_rz.dat',
@@ -6105,8 +6110,10 @@ c--------------------------------------------------------------------
         common /iounit/konsol,monito
 
         DATA LM/31,28,31,30,31,30,31,31,30,31,30,31/
-
-        Open(13,FILe='ap.dat',
+       CHARACTER(512) :: libpath
+       INTEGER :: nlp
+       CALL getlibpath(libpath,nlp)
+        Open(13,FILe=TRIM(libpath) // 'iri/' // 'ap.dat',
 c-web-sepcial vfor web version
 C      OPEN(13,FILE='/usr/local/etc/httpd/cgi-bin/models/IRI/ap.dat',
      *    ACCESS='DIRECT',RECL=39,FORM='FORMATTED',STATUS='OLD')
@@ -6195,8 +6202,10 @@ c--------------------------------------------------------------------
         common /iounit/konsol,monito
 
         DATA LM/31,28,31,30,31,30,31,31,30,31,30,31/
-
-        Open(13,FILE='ap.dat',
+       CHARACTER(512) :: libpath
+       INTEGER :: nlp
+       CALL getlibpath(libpath,nlp)
+        Open(13,FILE=TRIM(libpath) // 'iri/' // 'ap.dat',
 c-web-sepcial vfor web version
 C      OPEN(13,FILE='/usr/local/etc/httpd/cgi-bin/models/IRI/ap.dat',
      *    ACCESS='DIRECT',RECL=39,FORM='FORMATTED',STATUS='OLD')
@@ -7330,7 +7339,7 @@ CC
      #                      +Coff15(3,J)*dAEt_75)*bspl4_ptime(J,SLT)
           END DO
           DynamoVd=0.0D0
-	  print*,AEd1_6,AEd7_12,AEd22_28P,Alfa,Beta
+c	  print*,AEd1_6,AEd7_12,AEd22_28P,Alfa,Beta
           DO J=1,9
              DynamoVd=DynamoVd +(Coff15(4,J)*AEd1_6+
      #                           Coff15(5,J)*Alfa*AEd7_12+

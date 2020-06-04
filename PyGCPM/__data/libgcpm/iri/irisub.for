@@ -283,10 +283,12 @@ c      CHARACTER FILNAM*53
      &   /iounit/konsol,monito
 
       EXTERNAL          XE1,XE2,XE3_1,XE4_1,XE5,XE6,TEDER
-
+       CHARACTER(512) :: libpath
+       INTEGER :: nlp
+       
         save
         
-
+        CALL getlibpath(libpath,nlp)
         DO 7397 KI=1,20
         do 7397 kk=1,100
 7397    OUTF(KI,kk)=-1.
@@ -823,8 +825,8 @@ c-web- special for web-version:
 c104   FORMAT('/usr/local/etc/httpd/cgi-bin/models/IRI/ccir',I2,'.asc')
 c-web- special for web-version:
 c
-        OPEN(IUCCIR,FILE=FILNAM,STATUS='OLD',ERR=8448,
-     &          FORM='FORMATTED')
+        OPEN(IUCCIR,FILE=TRIM(libpath) // 'iri/' // FILNAM,STATUS='OLD',
+     &     ERR=8448,     FORM='FORMATTED')
 c-binary- if binary files than use:
 c-binary-     &          FORM='UNFORMATTED')
 c
@@ -846,7 +848,7 @@ c1144  FORMAT('/usr/local/etc/httpd/cgi-bin/models/IRI/ursi',I2,'.asc')
 c-binary- if binary files than use:
 c-binary-1144          FORMAT('ursi',I2,'.bin')
 
-          OPEN(IUCCIR,FILE=FILNAM,STATUS='OLD',ERR=8448,
+        OPEN(IUCCIR,FILE=TRIM(libpath) // 'iri/' // FILNAM,STATUS='OLD',ERR=8448,
      &         FORM='FORMATTED')
 c-binary- if binary files than use:
 c-binary-     &         FORM='UNFORMATTED')
@@ -870,8 +872,8 @@ c first CCIR ..............................................
 c
 
         WRITE(FILNAM,104) NMONTH+10
-        OPEN(IUCCIR,FILE=FILNAM,STATUS='OLD',ERR=8448,
-     &          FORM='FORMATTED')
+        OPEN(IUCCIR,FILE=TRIM(libpath) // 'iri/' // FILNAM,STATUS='OLD'
+     &        ,ERR=8448,  FORM='FORMATTED')
 c-binary- if binary files than use:
 c-binary-     &          FORM='unFORMATTED')
 
@@ -886,8 +888,9 @@ C then URSI if chosen .....................................
 C
         if(URSIF2) then
           WRITE(FILNAM,1144) NMONTH+10
-          OPEN(IUCCIR,FILE=FILNAM,STATUS='OLD',ERR=8448,
-     &         FORM='FORMATTED')
+
+        OPEN(IUCCIR,FILE=TRIM(libpath) // 'iri/' // FILNAM,STATUS='OLD',
+     &       ERR=8448,  FORM='FORMATTED')
 c-binary- if binary files than use:
 c-binary-     &         FORM='unFORMATTED')
 
