@@ -88,14 +88,14 @@ def PlotEqSlice(Date,ut,Parameter='ne',Rmax=10.0,dR=0.5,Kp=1.0,fig=None,
 		fig.figure()
 	if hasattr(fig,'Axes'):
 		ax = fig.subplot2grid((maps[1],maps[0]),(maps[3],maps[2]))
-		ax.set_ylim([Rmax,-Rmax])
-		ax.set_xlim([-Rmax,Rmax])
+		ax.set_xlim([Rmax,-Rmax])
+		ax.set_ylim([-Rmax,Rmax])
 		ax.set_aspect(1.0)
 	else:
 		ax = fig		
 		
 	#plot the mesh
-	sm = ax.pcolormesh(xe,ye,data,cmap=cmap,norm=norm,vmin=scale[0],vmax=scale[1])
+	sm = ax.pcolormesh(ye,xe,data,cmap=cmap,norm=norm,vmin=scale[0],vmax=scale[1])
 
 	#plot the planet
 	PlotPlanetXY(ax)
