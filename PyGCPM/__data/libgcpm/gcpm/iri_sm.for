@@ -27,7 +27,7 @@ c
 	dhour=float(itime(2))/3600000.0+25.0
 c
 	aheight=(r-1.0)*re
-	  print*,'iri_sm:',aheight,alatr,along,r,itime
+c	  print*,'iri_sm:',aheight,alatr,along,r,itime
 	if(aheight.gt.3000.0) then
 	  outf(1,1)=0.0
 	  oarr(2)=0.0
@@ -42,11 +42,11 @@ c
 	blongd=blong*raddeg
 c
 	jmag=0
-	  print*,'iri called with:'
-	  print*,blatd,blongd,yyyy,-ddd,dhour,aheight
+c	  print*,'iri called with:'
+c	  print*,blatd,blongd,yyyy,-ddd,dhour,aheight
 	call iri_sub(jf,jmag,blatd,blongd,yyyy,-ddd,dhour,
      &		aheight,aheight,delh,outf,oarr)
-	  print*,'density returned=',outf(1,1),oarr(2)
+c	  print*,'density returned=',outf(1,1),oarr(2)
 	  outf(1,1)=amax1(0.0,outf(1,1))
 
 	  rz12=oarr(33)

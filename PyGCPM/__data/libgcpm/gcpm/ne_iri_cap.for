@@ -48,7 +48,7 @@ c
 c setup input parameters to IRI
 	along=(amlt-12.0)*chrrad
 c
-	  print*,'into cap:',r,alatr,amlt,aheight,along
+c	  print*,'into cap:',r,alatr,amlt,aheight,along
 
 	if(aheight.lt. (ahcrit-overlap) ) then
 c  if a low enough altitude, then will only need to get density from IRI
@@ -67,7 +67,7 @@ c
 c aheight = height in km
 c bridge density = exp(powern*log(aheight)+refn)
 	  ne_iri_cap=exp(powern*log(aheight)+refn)+0.001
-	  print*,'cap setup:',nb1,refn,powern,ne_iri_cap
+c	  print*,'cap setup:',nb1,refn,powern,ne_iri_cap
 c
 	  if(aheight.le. (ahcrit+overlap) ) then
 	    call iri_sm(alatr,along,r,itime,outf,oarr)
@@ -81,11 +81,11 @@ c
 	    switch2=switchon(aheight,refh2,widthh)
 	    switch3=switchon(aheight,refh3,widthh)
 	    ne_iri_cap=edensity_iri*(1.0-switch3)+ne_iri_cap*switch2
-	  print*,'cap height trans:',edensity_iri,ne_iri_cap,switch2,switch3
+c	  print*,'cap height trans:',edensity_iri,ne_iri_cap,switch2,switch3
 	  end if
 	end if
 c
-	  print*,'leaving cap:',ne_iri_cap
+c	  print*,'leaving cap:',ne_iri_cap
 	return
 	end
 

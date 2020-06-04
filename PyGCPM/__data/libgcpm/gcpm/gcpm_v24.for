@@ -236,7 +236,7 @@ c
 	if(al.lt.tranlow) then
 c  execute this section if we are equatorward of the polar cap
 	  edensity=ne_iri_ps_trough(r,al,alatr,amlt,akp,itime)
-	  print*,'low n:',edensity
+c	  print*,'low n:',edensity
 	else
 	  if(al.le.tranhigh) then
 c  execute this section if we are in the transition region between
@@ -246,11 +246,11 @@ c  the trough and polar cap regions
 	    switch=switchon(al,alcrit,altrans)
 	    edensity=ps_edensity*(1.0-switch)+
      &		cap_edensity*switch
-	  print*,'mid n:',r,ps_edensity,cap_edensity,edensity,switch
+c	  print*,'mid n:',r,ps_edensity,cap_edensity,edensity,switch
 	  else
 c  execute this section if we are polarward of the trough
 	    edensity=ne_iri_cap(r,alatr,amlt,itime)
-	  print*,'polar n:',edensity
+c	  print*,'polar n:',edensity
 	  end if
 	end if
 c
@@ -262,13 +262,13 @@ c compute He+ to H+ density ratio in the plasmasphere
      &		-1.458e-5*f107*f107)
 c Helium concentration drops dramatically with transition to high latitudes
 c and open field lines
-	  print*,'intermediate aheh',aheh
+c	  print*,'intermediate aheh',aheh
 	aHeH=aHeH*(1.0-switchon(al,alcrit,altrans))
 c compute relative O+ density
-	  print*,'aheh',aheh
+c	  print*,'aheh',aheh
 	aheight=(r-1.0)*re
 	alphaO=0.995/(1.0+(aheight-350.0)**2/281250.0)**3+0.005
-	  print*,'alphaO',alphaO
+c	  print*,'alphaO',alphaO
 c compute relative He+ concentration in the plasmasphere
 	if(aHeH.ne.0.0) then
 	  alphaHeP=(1.0-alphaO)/(1.0+1.0/aHeH)
@@ -277,7 +277,7 @@ c compute relative He+ concentration in the plasmasphere
 	  alphaHe=0.0
 	end if
 c compute densities of H+, He+, and O+
-	  print*,'alphaHe',alphaHe
+c	  print*,'alphaHe',alphaHe
 	outn(1)=den
 	outn(3)=alphaHe*den
 	outn(4)=alphaO*den

@@ -37,7 +37,7 @@ c
 
 	common /irioutput/ rz12,f107,neiri,nhoiri,nheiri,noiri
 
-	  print*,'entering iri_ps_bridge',rr,al,amlt,itime,eq_iri_ps_trough
+c	  print*,'entering iri_ps_bridge',rr,al,amlt,itime,eq_iri_ps_trough
 c istat must be either 0 or -1 as it is used in an equation later
 	istat=0
 	dl=al
@@ -68,11 +68,11 @@ c  then the L-shell provided is exclusively an ionospheric issue
 c  and we need to pass back parameters that will minimize the hassle
 c  associated with the rest of the calculation for density, which
 c  will necessarily exclude the bridge density anyway.
-	  print*,'f2 peak at:',rf2,al
+c	  print*,'f2 peak at:',rf2,al
 
 	if(rr.le.rf2) then
 	  istat=-1
-	  print*,'No bridge required, istat=-1 ',rs,al
+c	  print*,'No bridge required, istat=-1 ',rs,al
 	  return
 	endif
 
@@ -83,7 +83,7 @@ c (derived from the search algorithm above) as a function of returned
 c rz12 value from IRI2007. That analysis obtained this relationship:
 c     ro = (1.05454+-0.000102) + (8.62678e-5+-1.20975e-6)*rz12
       ro = 1.05454 + 8.62678e-5*rz12
-	  print*,'fieldaligned_bridge:',rz12,ro,rf2      
+c	  print*,'fieldaligned_bridge:',rz12,ro,rf2      
       if (ro .le. rf2) ro=rf2+0.01
 
 	transh=(ro-1.0)*re
@@ -108,28 +108,28 @@ c calculation of the power law function.
 	alatrl=acos(cosrl)*ahemisphere
 	call iri_sm(alatrl,along,r1,itime,outf,oarr)
 	an1=outf(1,1)
-	  print*,'an1: ',alatrl,along,r1,an1,al
+c	  print*,'an1: ',alatrl,along,r1,an1,al
 	cosrl=amin1(sqrt(r2/al),1.0)
 	alatrl=acos(cosrl)*ahemisphere
 	call iri_sm(alatrl,along,r2,itime,outf,oarr)
 	an2=outf(1,1)
-	  print*,'an2: ',alatrl,along,r2,an2,al
+c	  print*,'an2: ',alatrl,along,r2,an2,al
 
 	if(al.le.r2) then
 	  istat=-1
-	  print*,'No bridge required, istat=-1 ',al,r2
+c	  print*,'No bridge required, istat=-1 ',al,r2
 	  return
 	endif
 
 	eqh=(al-1.0)*re
-	  print*,'bridge=',ah1,ah2,eqh,transh,antransh
+c	  print*,'bridge=',ah1,ah2,eqh,transh,antransh
 	  print*,'      =',an1,an2,eq_iri_ps_trough
       alpha=-alog10(an1/an2)/alog10(ah1/ah2)
       ano=an1*ah1**alpha
-	  print*,'intial alpha,ano:',alpha,ano
+c	  print*,'intial alpha,ano:',alpha,ano
       
       an3=ano*eqh**(-alpha)
-	  print*,'setup:',an3,eq_iri_ps_trough
+c	  print*,'setup:',an3,eq_iri_ps_trough
 
 c set up use of switch term that will not function by default
       switchh=eqh*2.0
@@ -137,19 +137,19 @@ c set up use of switch term that will not function by default
 
       if (eq_iri_ps_trough .ge. an3) then
         if(an2.le.eq_iri_ps_trough) then
-	  print*,'inverse IRI-eq:'
+c	  print*,'inverse IRI-eq:'
           alpha=alog10(antransh/eq_iri_ps_trough)/alog10(transh/eqh)
           ano=antransh*transh**alpha
           dno=ano
         else
-	  print*,'greater than or equal too'
+c	  print*,'greater than or equal too'
           co=eq_iri_ps_trough - an3
           alpha=-alog10((an1-co)/(an2-co))/alog10(ah1/ah2)
           ano=(an1-co)*ah1**alpha
           dno=ano
         endif
       else
-	  print*,'less than'
+c	  print*,'less than'
 c  keep initial alpha and ano values
 c  provide switch values that bring the bridge function to the equatorial
 c  density at the equator

@@ -26,8 +26,8 @@ c
 	data amlt_o/-99.0/akp_o/-99.0/,al_o/-99.0/
 	data itime1_o/-99/,itime2_o/-99/
 
-	  print*,'entering ne_iri_ps_trough with',r,al,alatr
-	  print*,'           and ',amlt,akp,itime
+c	  print*,'entering ne_iri_ps_trough with',r,al,alatr
+c	  print*,'           and ',amlt,akp,itime
 c
 c  We don't do inside the earth; we're just not that kind of model, humph!
 	if(r.le.1.0) then
@@ -41,16 +41,16 @@ c  altitude of point of interest
 	ahemisphere=sign(1.0,alatr)
 c  density at the equator for given L-shell
 	eq_iri_ps_trough=ne_iri_ps_trough_eq(al,amlt,akp,itime)
-	  print*,'back from ne_iri_ps_trough_eq=',eq_iri_ps_trough
-	  print*,'bridge? ',amlt,amlt_o,akp,akp_o,al,al_o
-	  print*,'      ? ',itime(1),itime1_o,itime(2),itime2_o
+c	  print*,'back from ne_iri_ps_trough_eq=',eq_iri_ps_trough
+c	  print*,'bridge? ',amlt,amlt_o,akp,akp_o,al,al_o
+c	  print*,'      ? ',itime(1),itime1_o,itime(2),itime2_o
 	if(amlt.ne.amlt_o .or. akp.ne.akp_o .or.
      &	itime(1).ne.itime1_o .or. itime(2).ne.itime2_o .or.
      &	abs(al-al_o).gt.1.0e-5 .or. istat.lt.0 .or.
      &  ahemisphere.ne.ahemisphere_o) then
-	  print*,'Evaluate field aligned power law function'
-	  print*,'showit:',(amlt-amlt_o),(akp-akp_o),(al-al_o)
-	  print*,(itime(1)-itime1_o),(itime(2)-itime2_o)
+c	  print*,'Evaluate field aligned power law function'
+c	  print*,'showit:',(amlt-amlt_o),(akp-akp_o),(al-al_o)
+c	  print*,(itime(1)-itime1_o),(itime(2)-itime2_o)
 c
 c  determine the height power law fit parameters that connect the
 c  topside ionosphere to the equatorial density along given L-shell
@@ -60,8 +60,8 @@ c  topside ionosphere to the equatorial density along given L-shell
 	    along=(amlt-12.0)*amltrad
 	    call iri_sm(alatr,along,r,itime,outf,oarr)
 	    ne_iri_ps_trough=outf(1,1)
-	  print*,'back from iri_ps_bridge with stat<0'
-	  print*,'     ',r,alatr,along,ne_iri_ps_trough
+c	  print*,'back from iri_ps_bridge with stat<0'
+c	  print*,'     ',r,alatr,along,ne_iri_ps_trough
 	    return
 	  endif
 	  al_o=al
@@ -88,7 +88,7 @@ c        swtchb=switchon(aheight,switchh,switchw)
          endif
 	  eq_bridge=(dno*aheight**(-alpha) + co)*(1.0-swtchb) 
      &                 + swtchb*eq_iri_ps_trough
-	  print*,'bridge ne=',eq_bridge,dno,aheight,alpha,co
+c	  print*,'bridge ne=',eq_bridge,dno,aheight,alpha,co
 
 c  to call IRI or not to call IRI, that is the question...
 	  if (aheight.lt.1000.0) then
@@ -101,15 +101,15 @@ c  to call IRI or not to call IRI, that is the question...
 	      ne_iri_ps_trough=outf(1,1)*(1.0-swtch1) + eq_bridge*swtch1
 	      ne_iri_ps_trough=ne_iri_ps_trough*float(istat+1)
      &						+ outf(1,1)*float(iabs(istat))
-	  print*,'swtch',outf(1,1),eq_bridge,swtch1,ne_iri_ps_trough
+c	  print*,'swtch',outf(1,1),eq_bridge,swtch1,ne_iri_ps_trough
           endif
 	  else
 
 	    ne_iri_ps_trough=eq_bridge
 	  end if
-	  print*,'leaving ne_iri_ps_trough=',ne_iri_ps_trough
-	  print*,'                        =',r,al,alatr,amlt,akp
+c	  print*,'leaving ne_iri_ps_trough=',ne_iri_ps_trough
+c	  print*,'                        =',r,al,alatr,amlt,akp
 c
-	  print*,'ne_iri_ps_trough:',eq_bridge,ne_iri_ps_trough
+c	  print*,'ne_iri_ps_trough:',eq_bridge,ne_iri_ps_trough
 	return
 	end

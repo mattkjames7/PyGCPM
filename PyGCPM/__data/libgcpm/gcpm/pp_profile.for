@@ -21,12 +21,12 @@ c
 	real pp_profile,al,amlt,a8,a9,factor
 	real centroid,akp_old,akp,amlt_old
 	data akp_old/-99.0/,amlt_old/-99.0/
-	  print*,'into pp_profile:',al,amlt,akp,a8
+c	  print*,'into pp_profile:',al,amlt,akp,a8
 c
 c  Allow for mlt rotation of the buldge with Kpmax
 	if((akp.ne.akp_old) .or. (amlt.ne.amlt_old)) 
      &            call bulge(amlt,akp,a8,a9,centroid)
-	  print*,'Recalled subroutine bulge'
+c	  print*,'Recalled subroutine bulge'
 	akp_old=akp
 	amlt_old=amlt
 c
@@ -34,7 +34,7 @@ c  compute 10**factor in such a way to avoid floating overflow
 	factor=amin1(27.75,2.0*(a9-1.0)*alog10(al/a8))
 	pp_profile=(1.0+10.0**factor)**(-a9/(a9-1.0))
 
-	  print*,'leaving pp_profile:',pp_profile,factor,a8,a9,centroid
+c	  print*,'leaving pp_profile:',pp_profile,factor,a8,a9,centroid
 c
 	return
 	end

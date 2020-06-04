@@ -14,7 +14,7 @@ c
 	data ahour_rad/0.26179939/
 	data ahrrad/2.6179939e-1/
 
-	  print*,'Entering bulge:',amlt,akp,a8,a9,centroid
+c	  print*,'Entering bulge:',amlt,akp,a8,a9,centroid
 c
 c  Allow for mlt rotation of the buldge with Kpmax
 c	centroid=0.103*akp*akp-2.19*akp+23.5
@@ -81,7 +81,7 @@ c a9=b3*kp**2+b4*kp+b5  where b3,b4, and b5 have a sine wave variation
 	b5= 3.5817*salong+48.8114
 	a9=b3*akp*akp + b4*akp+b5
 
-	  print*,'from bulge:',a8,a9,centroid
+c	  print*,'from bulge:',a8,a9,centroid
 c
 	return
 	end

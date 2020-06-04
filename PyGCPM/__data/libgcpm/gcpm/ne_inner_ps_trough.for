@@ -32,7 +32,7 @@ c
 
 	common /irioutput/ rz12,f107
 
-	  print*,'ne_eq_trough caled with',al,amlt,akp
+c	  print*,'ne_eq_trough caled with',al,amlt,akp
 
 c
 c  compute MLT where trough density peaks assuming constant Kp
@@ -75,19 +75,19 @@ c  must deal with computation differently based on current mlt
 	  geosync_trough= denmin*switch0*(1.0-switch1) 
      &		+ dendamp*(1.0-switch0)
      &	           + dengrow*switch1*(1.0-switch2)
-	  print*,'lt.8.0:',denmin,switch0,switch1,dendamp,dengrow
+c	  print*,'lt.8.0:',denmin,switch0,switch1,dendamp,dengrow
 	else
 	  dendamp=antp+damping*(amlt-phitp)
 	  switch3=switchon(amlt,down_time-shift,sdel)
 	  geosync_trough= denmin*switch3 + dengrow*switch1*(1.0-switch2)
      &	           + dendamp*switch2*(1.0-switch3)
-	  print*,'ge.8.0:',denmin,switch3,dengrow,switch1,switch2,dendamp
+c	  print*,'ge.8.0:',denmin,switch3,dengrow,switch1,switch2,dendamp
 	end if
 c scale density from trough density at geosynchronous orbit
 c to L-shell of interest "l" using a power law of -4.5 in L
 c	    =ne_trough[at L=6.6]*al**(-4.5)/6.6**(-4.5)
 	trough_density=geosync_trough*al**(-4.5)/2.0514092e-4
-	  print*,'trough:',geosync_trough,trough_density,al
+c	  print*,'trough:',geosync_trough,trough_density,al
 	ne_eq_trough=trough_density
 c
 	return
@@ -179,7 +179,7 @@ c no plasmapause. If a8 is beyond that point, then the crossing point is
 c substituted for a8.
       entry check_crossing(a8,am1,b1,x234,amlt,akp)
 
-	  print*,'initial crossing=',a8,am1,b1,amlt,akp
+c	  print*,'initial crossing=',a8,am1,b1,amlt,akp
 c Determine where the inner plasmasphere plus plasmapause profile
 c intersects with the trough density profile.
       stepl=0.5
@@ -188,7 +188,7 @@ c intersects with the trough density profile.
       b=pp_profile(zl,amlt,akp,a8)
       c=geosync_trough*zl**(-4.5)/2.0514092e-4
       diff=a*b - c
-	  print*,'crossing:',zl,stepl,diff,a,b,c,geosync_trough,a8,akp,amlt
+c	  print*,'crossing:',zl,stepl,diff,a,b,c,geosync_trough,a8,akp,amlt
       icount=0
       do while (abs(stepl).gt.0.05)
         if ((diff.lt.0.0).and.(stepl.gt.0.0) .or.
@@ -197,14 +197,14 @@ c intersects with the trough density profile.
 c same calculation done in ne_inner_ps
         diff=10**(am1*zl+b1 + x234)*pp_profile(zl,amlt,akp,a8) 
      &     -geosync_trough*zl**(-4.5)/2.0514092e-4
-	  print*,'crossing:',zl,stepl,diff
+c	  print*,'crossing:',zl,stepl,diff
         icount=icount+1
         if (icount.gt.100) then
           temp=pp_profile(zl,amlt,akp,a8)
-    	  print*,'check_crossing is loop-bound:',
-     &                am1,b1,zl,x234,amlt,akp,a8,
-     &                temp,geosync_trough,stepl
-    	  print*,'STOPPING***********'
+c    	  print*,'check_crossing is loop-bound:',
+c     &                am1,b1,zl,x234,amlt,akp,a8,
+c     &                temp,geosync_trough,stepl
+c    	  print*,'STOPPING***********'
           stop
         endif
       enddo

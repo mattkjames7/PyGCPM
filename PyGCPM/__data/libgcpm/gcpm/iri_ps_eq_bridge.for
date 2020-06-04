@@ -42,17 +42,17 @@ c
 
 	common /irioutput/ rz12,f107,neiri,nhoiri,nheiri,noiri
 
-	  print*,'entering iri_ps_eq_bridge',amlt,itime,am1,b1,x234
+c	  print*,'entering iri_ps_eq_bridge',amlt,itime,am1,b1,x234
 
 	alatr=0.0
 	along=(amlt+12.0)*amltrad
 	along=along - (1.0-sign(1.0,(12.0-amlt)))*pi
 
 c  get height and densiy of the f2 peak
-	  print*,'iri_ps_eq_bridge calling iri_sm @r',r,along
+c	  print*,'iri_ps_eq_bridge calling iri_sm @r',r,along
 	call iri_sm(alatr,along,r,itime,outf,oarr)
 	rf2=oarr(2)/re+1.0
-	  print*,'f2:',rf2
+c	  print*,'f2:',rf2
 
 c In an effort to reduce the cals to iri2007 the following is used
 c to approximate the point of maximum negative slope in the topside
@@ -61,7 +61,7 @@ c (derived from the search algorithm above) as a function of returned
 c rz12 value from IRI2007. That analysis obtained this relationship:
 c     ro = (1.05454+-0.000102) + (8.62678e-5+-1.20975e-6)*rz12
       ro = 1.05454 + 8.62678e-5*rz12
-	  print*,'eq_bridge:',rz12,ro,rf2      
+c	  print*,'eq_bridge:',rz12,ro,rf2      
 c      if (ro .le. rf2) ro=rf2+0.01
       ro=amax1((rf2+0.01),ro)
 	transh=(ro-1.0)*re
@@ -82,16 +82,16 @@ c calculation of the power law function.
 	call iri_sm(alatr,along,(ah2/re+1.0),itime,outf,oarr)
 	an2old=outf(1,1)
 	
-	  print*,'power law foder:',an1old,an2old,ah1,ah2
+c	  print*,'power law foder:',an1old,an2old,ah1,ah2
 
 c calculate the initial equatorial power law transition function
 	alphao=-log(an1old/an2old)/log(ah1/ah2)
 	ano=dens/transh**(-alphao)
-	  print*,'bridge init:',alphao,ano,dens,transh
+c	  print*,'bridge init:',alphao,ano,dens,transh
 c calculate where this initial power law intersects the plasmasphere profile
       psh=2000.0
       do ii=1,5
- 	  print*,'psh interation:',ii,psh,ano,alphao,am1,b1
+c 	  print*,'psh interation:',ii,psh,ano,alphao,am1,b1
         psh=10.0**((am1*(psh/re+1.0)+b1+x234+6.0-alog10(ano))/(-alphao))
                           ! inner plasmasphere density calculation
       enddo
@@ -105,7 +105,7 @@ c matches the slope of the interior plasmaspheric density
         psL=1.0 - alphao/am1/alog(10.0)
         psh=(psL-1.0)*re
       endif
-	  print*,'psh final:',psh
+c	  print*,'psh final:',psh
       psden=10.0**(am1*psL+b1+x234+6.0) !inner plasmasphere density calculation
 
 c new power law value, alpha, needs to match the ionosphere at the point
@@ -113,8 +113,8 @@ c of maximum slope and the interior plasmaspheric density where the initial
 c power law slope matches the plasmasphere interior density slope
       alpha=-alog10(dens/psden)/alog10(transh/psh)
       ano=dens/transh**(-alpha)
-	  print*,'reworked bridge:',psL,psh,psden,am1,b1
-	  print*,'leaving iri_ps_eq_bridge',alpha,ano,dens,ro,transh
+c	  print*,'reworked bridge:',psL,psh,psden,am1,b1
+c	  print*,'leaving iri_ps_eq_bridge',alpha,ano,dens,ro,transh
 
 	return
 	end

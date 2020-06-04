@@ -22,7 +22,7 @@ c
 	data amlt_o/-99.0/akp_o/-99.0/
 	data itime1_o/-99/,itime2_o/-99/
 	
-	  print*,'entering ne_iri_ps_trough_eq:',al,amlt,akp,itime
+c	  print*,'entering ne_iri_ps_trough_eq:',al,amlt,akp,itime
 c
 c  We don't do inside the earth; we're just not that kind of model, humph!
 	if(al.le.1.0) then
@@ -35,10 +35,10 @@ c
 c  altitude of point of interest
 	aheight=(al-1.0)*re
 	pp_factor=pp_profile(al,amlt,akp,a8)
-	  print*,'from pp_profile:',pp_factor,al,amlt,akp,a8
+c	  print*,'from pp_profile:',pp_factor,al,amlt,akp,a8
 
 	ps_inner=ne_inner_ps(al,amlt,itime,am1,b1,x234)*1.0e6
-	  print*,'from ne_inner_ps:',ps_inner,al,amlt,am1,b1,x234
+c	  print*,'from ne_inner_ps:',ps_inner,al,amlt,am1,b1,x234
 
 	if(amlt.ne.amlt_o .or. akp.ne.akp_o .or.
      &	itime(1).ne.itime1_o .or. itime(2).ne.itime2_o) then
@@ -55,7 +55,7 @@ c    &       r,amlt,itime,transh,alpha,ano,rintercept
 	  itime1_o=itime(1)
 	  itime2_o=itime(2)
 	end if
-	  print*,'values 1:',a8,am1,b1
+c	  print*,'values 1:',a8,am1,b1
 
 	  ps_bridge=ano*aheight**(-alpha)
 c 	  print*,'bridge-ps n:',ps_inner,ps_bridge
@@ -69,9 +69,9 @@ c 	  print*,'bridge-ps n:',ps_inner,ps_bridge
 c	    along=along - (1.0-sign(1.0,(12.0-amlt)))*pi
 	    call iri_sm(alatr,along,al,itime,outf,oarr)
 	    swtch1=switchon(aheight,transh,5.0)
-	  print*,'entering ne_eq_trough:',swtch1,aheight,transh
+c	  print*,'entering ne_eq_trough:',swtch1,aheight,transh
           ne_eq_trough_den=ne_eq_trough(al,amlt,akp)
-	  print*,'entering check_crossing:',ne_eq_trough_den
+c	  print*,'entering check_crossing:',ne_eq_trough_den
           zl=check_crossing(a8,am1,b1,x234,amlt,akp)
           diff=a8-zl
           offset=(0.0166513 
@@ -84,10 +84,10 @@ c    	  print*,'offset:',akp,a8,zl,(a8-zl),offset
      &  ((ps_bridge*(1.0-swtch2)*swtch1 +
      &	ps_inner*swtch3)*pp_factor)*(1.0-swtch4) +
      &	ne_eq_trough_den*1.0e6*swtch5
-	  print*,'** ',swtch1,swtch2,swtch3,swtch4,swtch5
-	  print*,al,rintercept,off,aheight,transh,pp_factor
-	  print*,outf(1,1),ps_bridge,ps_inner,ne_eq_trough_den
-	  print*,ne_iri_ps_trough_eq
+c	  print*,'** ',swtch1,swtch2,swtch3,swtch4,swtch5
+c	  print*,al,rintercept,off,aheight,transh,pp_factor
+c	  print*,outf(1,1),ps_bridge,ps_inner,ne_eq_trough_den
+c	  print*,ne_iri_ps_trough_eq
 c
 
 	return
