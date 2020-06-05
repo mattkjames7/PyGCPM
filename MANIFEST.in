@@ -1,0 +1,2 @@
+recursive-include PyGCPM/__data/libgcpm *
+
