@@ -8,6 +8,10 @@ The original code has been modified slightly such that it produces less
 output to the terminal and the path of the data files used is passed 
 through a C wrapper so that the Fortran code is able to find them.
 
+It's also worth noting that the IGRF component of the model needs 
+updating - strange things may happen with years beyond ~2010. I will
+fix this.
+
 ## Installation
 
 Using `pip`:
