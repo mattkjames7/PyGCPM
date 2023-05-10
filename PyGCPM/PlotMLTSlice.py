@@ -5,7 +5,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from .PlotPlanet import PlotPlanetXZ
 from .GCPM import GCPM
 
-def PlotMLTSlice(MLT,Date,ut,Parameter='ne',Rmax=10.0,dR=0.5,Kp=1.0,fig=None,
+def PlotMLTSlice(MLT,Date,ut,Parameter='ne',Rmax=4.0,dR=0.5,Kp=1.0,fig=None,
 		maps=[1,1,0,0],zlog=True,cmap='gnuplot',scale=None,Verbose=False):
 	'''
 	Plots the GCPM model in the equatorial plane.
@@ -65,24 +65,20 @@ def PlotMLTSlice(MLT,Date,ut,Parameter='ne',Rmax=10.0,dR=0.5,Kp=1.0,fig=None,
 	leftlab = '{:4.1f} MLT'.format(MLT + 12.0 % 24.0)
 	rightlab = '{:4.1f} MLT'.format(MLT % 24.0)
 
-	
+	print(xc.size)
+
 	#calculate the model
 	m = GCPM(xc,yc,zc,Date,ut,Kp=Kp,Verbose=Verbose)
 	
 	#get the color bar label
 	inf = {	'ne' : (m[0],'$n_e$ (cm$^{-3}$)'),
-			'nH' : (m[0],'$n_H$ (cm$^{-3}$)'),
-			'nHe' : (m[0],'$n_He$ (cm$^{-3}$)'),
-			'nO' : (m[0],'$n_O$ (cm$^{-3}$)')}
+			'nH' : (m[1],'$n_H$ (cm$^{-3}$)'),
+			'nHe' : (m[2],'$n_He$ (cm$^{-3}$)'),
+			'nO' : (m[3],'$n_O$ (cm$^{-3}$)')}
 	data,zlabel = inf[Parameter]
 	data = data.reshape(xc.shape)
 
-	if zlog:
-		norm = colors.LogNorm()
-	else:
-		norm = colors.Normalize()	
-	
-	
+
 	#get the scale limits
 	if scale is None:
 		if zlog:
@@ -90,6 +86,14 @@ def PlotMLTSlice(MLT,Date,ut,Parameter='ne',Rmax=10.0,dR=0.5,Kp=1.0,fig=None,
 		else:
 			scale = [np.nanmin(data),np.nanmax(data)]
 		
+
+	if zlog:
+		norm = colors.LogNorm(vmin=scale[0],vmax=scale[1])
+	else:
+		norm = colors.Normalize(vmin=scale[0],vmax=scale[1])
+	
+	
+
 	
 
 	#create the plot window
@@ -105,7 +109,7 @@ def PlotMLTSlice(MLT,Date,ut,Parameter='ne',Rmax=10.0,dR=0.5,Kp=1.0,fig=None,
 		ax = fig		
 		
 	#plot the mesh
-	sm = ax.pcolormesh(rhoe,ze,data,cmap=cmap,norm=norm,vmin=scale[0],vmax=scale[1])
+	sm = ax.pcolormesh(rhoe,ze,data,cmap=cmap,norm=norm)
 
 	#plot the planet
 	PlotPlanetXZ(ax,NoBlack=True)

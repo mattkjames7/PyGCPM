@@ -71,20 +71,34 @@ void GCPM(float *x, float *y, float *z, int *year, int *doy, float *ut,
 	float tmp[4];
 	int itime[2];
 	int i;
+
 	for (i=0;i<n;i++) {
 		if (Verbose) {
 			printf("\rCalculating %6.2f%%",((float) 100 * (i+1))/n);
 		}
 		itime[0] = itime0[i];
 		itime[1] = itime1[i];
-		gcpm_v24_(itime,&r[i],&amlt[i],&alatr[i],&kp[i],tmp);
-		
-		ne[i] = tmp[0];
-		nH[i] = tmp[1];
-		nHe[i] = tmp[2];
-		nO[i] = tmp[3];
+
+        if (isfinite(alatr[i])) {
+		    gcpm_v24_(itime,&r[i],&amlt[i],&alatr[i],&kp[i],tmp);
+		    
+		    ne[i] = tmp[0];
+		    nH[i] = tmp[1];
+		    nHe[i] = tmp[2];
+		    nO[i] = tmp[3];
+        } else {
+            ne[i] = NAN;
+            nH[i] = NAN;
+            nHe[i] = NAN;
+            nO[i] = NAN;        
+        }
 	}
 	if (Verbose) {
 		printf("\rCalculating %6.2f%%\n",100.0);
 	}
+    free(r);
+    free(amlt);
+    free(alatr);
+    free(itime0);
+    free(itime1);
 }

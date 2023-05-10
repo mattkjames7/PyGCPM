@@ -7,7 +7,7 @@ obj:
 	gcc -c -fPIC libgcpm.c -o libgcpm.o
 	
 lib:
-	gfortran -fPIC -fno-automatic -ffree-line-length-none -shared -lm -o libgcpm.so libgcpm.o iri/*.o xform/*.o gcpm/*.o
+	gfortran -fPIC -fno-automatic -ffree-line-length-none --std=legacy -shared -lm -o libgcpm.so libgcpm.o iri/*.o xform/*.o gcpm/*.o
 	
 clean:
 	cd iri && $(MAKE) clean

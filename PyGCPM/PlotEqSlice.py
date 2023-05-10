@@ -67,18 +67,20 @@ def PlotEqSlice(Date,ut,Parameter='ne',Rmax=10.0,dR=0.5,Kp=1.0,fig=None,
 	data,zlabel = inf[Parameter]
 	data = data.reshape(xc.shape)
 
-	if zlog:
-		norm = colors.LogNorm()
-	else:
-		norm = colors.Normalize()	
-	
-	
 	#get the scale limits
 	if scale is None:
 		if zlog:
 			scale = [np.nanmin(data[data > 0]),np.nanmax(data)]
 		else:
 			scale = [np.nanmin(data),np.nanmax(data)]
+
+	if zlog:
+		norm = colors.LogNorm(vmin=scale[0],vmax=scale[1])
+	else:
+		norm = colors.Normalize(vmin=scale[0],vmax=scale[1])	
+	
+	
+
 		
 	
 
@@ -95,7 +97,7 @@ def PlotEqSlice(Date,ut,Parameter='ne',Rmax=10.0,dR=0.5,Kp=1.0,fig=None,
 		ax = fig		
 		
 	#plot the mesh
-	sm = ax.pcolormesh(ye,xe,data,cmap=cmap,norm=norm,vmin=scale[0],vmax=scale[1])
+	sm = ax.pcolormesh(ye,xe,data,cmap=cmap,norm=norm)
 
 	#plot the planet
 	PlotPlanetXY(ax)
