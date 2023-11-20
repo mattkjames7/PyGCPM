@@ -32,7 +32,7 @@ void _ConvertPos(float *x, float *y, float *z, int n, float *r, float *amlt, flo
 		if (amlt[i] < 0) {
 			amlt[i] += 24.0;
 		}
-		alatr[i] = asinf(z[i]/sqrtf(rho2));
+		alatr[i] = atanf(z[i]/sqrtf(rho2));
 	}
 	
 }

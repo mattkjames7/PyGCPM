@@ -65,7 +65,6 @@ def PlotMLTSlice(MLT,Date,ut,Parameter='ne',Rmax=4.0,dR=0.5,Kp=1.0,fig=None,
 	leftlab = '{:4.1f} MLT'.format(MLT + 12.0 % 24.0)
 	rightlab = '{:4.1f} MLT'.format(MLT % 24.0)
 
-	print(xc.size)
 
 	#calculate the model
 	m = GCPM(xc,yc,zc,Date,ut,Kp=Kp,Verbose=Verbose)
