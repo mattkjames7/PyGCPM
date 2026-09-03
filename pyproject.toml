@@ -1,0 +1,54 @@
+[build-system]
+requires = ["scikit-build-core>=0.11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "PyGCPM"
+version = "0.1.0"
+description = "Python wrapper for the Global Core Plasma Model"
+readme = "README.md"
+license = "GPL-3.0-only"
+authors = [
+    { name = "Matthew Knight James", email = "mattkjames7@gmail.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "numpy",
+    "DateTimeTools>=0.0.6",
+    "matplotlib",
+]
+
+[project.urls]
+Homepage = "https://github.com/mattkjames7/PyGCPM"
+
+[tool.scikit-build]
+minimum-version = "build-system.requires"
+cmake.version = ">=3.20"
+cmake.build-type = "Release"
+wheel.packages = ["PyGCPM"]
+wheel.py-api = "py3"
+install.components = ["Python"]
+sdist.exclude = [
+    "**/__pycache__",
+    "**/*.o",
+    "**/*.so",
+    "**/*.dylib",
+    "**/*.dll",
+]
+wheel.exclude = [
+    "PyGCPM/__data/libgcpm/**/*.for",
+    "PyGCPM/__data/libgcpm/**/*.FOR",
+    "PyGCPM/__data/libgcpm/**/*.o",
+    "PyGCPM/__data/libgcpm/**/*.c",
+    "PyGCPM/__data/libgcpm/**/*.h",
+    "PyGCPM/__data/libgcpm/**/makefile",
+    "PyGCPM/__data/libgcpm/**/*.pro",
+    "PyGCPM/__data/libgcpm/**/*.jpg",
+    "PyGCPM/__data/libgcpm/**/*.bin",
+    "PyGCPM/__data/libgcpm/**/test_*",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

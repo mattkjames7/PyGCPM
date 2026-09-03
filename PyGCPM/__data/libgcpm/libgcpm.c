@@ -4,7 +4,7 @@ void setLibPath(const char *libpath) {
 	//printf("Setting path %s\n",libpath);
 	int l = strlen(libpath);
 	if (libgcpm_path == NULL) {
-		libgcpm_path = (char*) malloc(sizeof(char)*l);
+		libgcpm_path = (char*) malloc(sizeof(char)*(l + 1));
 	}
 	strcpy(libgcpm_path,libpath);
 	//printf("Done: %s\n",libgcpm_path);
