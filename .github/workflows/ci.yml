@@ -256,6 +256,7 @@ jobs:
         env:
           CIBW_ARCHS_WINDOWS: ${{ matrix.arch == 'x86_64' && 'AMD64' || 'ARM64' }}
           CIBW_BEFORE_ALL_WINDOWS: choco install mingw -y
+          CIBW_BEFORE_BUILD_WINDOWS: python -m pip install delvewheel==1.12.0
           CIBW_BUILD: cp314-*
           CIBW_ENVIRONMENT_WINDOWS: >-
             CMAKE_GENERATOR=Ninja
