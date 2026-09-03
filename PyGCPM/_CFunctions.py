@@ -1,6 +1,7 @@
 import numpy as np
-import os
 import ctypes as ct
+from pathlib import Path
+import sys
 
 #some ctypes
 c_str = ct.c_char_p
@@ -13,25 +14,15 @@ c_float_ptr = np.ctypeslib.ndpointer(ct.c_float,flags="C_CONTIGUOUS")
 c_double_ptr = np.ctypeslib.ndpointer(ct.c_double,flags="C_CONTIGUOUS")
 
 #get the path of the library
-libpath = os.path.dirname(__file__)+"/__data/libgcpm/"
+libpath = Path(__file__).resolve().parent / "__data" / "libgcpm"
+if sys.platform == "win32":
+	library = libpath / "libgcpm.dll"
+elif sys.platform == "darwin":
+	library = libpath / "libgcpm.dylib"
+else:
+	library = libpath / "libgcpm.so"
 
-#let's try and import the module
-try:
-	libgcpm = ct.CDLL(libpath+"libgcpm.so")
-except:
-	print('importing libgcpm.so failed, attempting to recompile')
-	path = os.path.dirname(__file__)
-	if '/usr/local/' in path:
-		sudo = 'sudo '
-	else:
-		sudo = ''
-
-	CWD = os.getcwd()
-	os.chdir(libpath)
-	os.system(sudo+'make clean')
-	os.system(sudo+'make')
-	os.chdir(CWD)	
-	libgcpm = ct.CDLL(libpath+"libgcpm.so")
+libgcpm = ct.CDLL(str(library))
 
 
 
@@ -58,4 +49,4 @@ _Csetpath = libgcpm.setLibPath
 _Csetpath.restype = None
 _Csetpath.argtypes = [c_str]
 
-_Csetpath(c_str(libpath.encode("utf-8")))
+_Csetpath(c_str((str(libpath) + "/").encode("utf-8")))

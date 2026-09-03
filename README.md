@@ -26,13 +26,18 @@ or,
 pip3 install PyGCPM --user
 ```
 
-From this repo:
+From this repo (a C and Fortran compiler are required):
 
 ```
 git clone https://github.com/mattkjames7/PyGCPM.git
 cd PyGCPM/
-python3 setup.py install --user
+python3 -m pip install . --user
 ```
+
+Pull requests build and test wheels for Linux (x86-64 and ARM64), macOS
+(Intel and Apple Silicon), and Windows x86-64. Maintainers can run the release
+workflow to create a version tag, attach all distributions to a GitHub release,
+and publish them to PyPI or TestPyPI.
 
 ## Usage
 
