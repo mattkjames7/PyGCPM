@@ -100,7 +100,7 @@ jobs:
         env:
           CIBW_ARCHS_LINUX: ${{ matrix.arch }}
           CIBW_BEFORE_ALL_LINUX: yum install -y gcc-gfortran
-          CIBW_BUILD: cp314-*
+          CIBW_BUILD: cp314-manylinux*
         run: |
           python -m pip install cibuildwheel==3.3.0
           python -m cibuildwheel --platform linux --output-dir wheelhouse
@@ -170,12 +170,21 @@ jobs:
           python-version: "3.14"
           architecture: ${{ matrix.python_arch }}
 
+      - name: Install GNU Fortran
+        run: |
+          brew install gcc
+          runtime=$(dirname "$(gfortran --print-file-name libgfortran.dylib)")
+          echo "REPAIR_LIBRARY_PATH=$runtime" >> "$GITHUB_ENV"
+
       - name: Build wheel
         env:
           CIBW_ARCHS_MACOS: ${{ matrix.arch }}
-          CIBW_BEFORE_ALL_MACOS: brew install gcc
           CIBW_BUILD: cp314-*
           CIBW_ENVIRONMENT_MACOS: FC=gfortran MACOSX_DEPLOYMENT_TARGET=${{ matrix.deployment_target }}
+          CIBW_REPAIR_WHEEL_COMMAND_MACOS: >-
+            DYLD_LIBRARY_PATH=$REPAIR_LIBRARY_PATH
+            delocate-wheel --require-archs {delocate_archs}
+            -w {dest_dir} -v {wheel}
         run: |
           python -m pip install cibuildwheel==3.3.0
           python -m cibuildwheel --platform macos --output-dir dist
@@ -248,7 +257,11 @@ jobs:
           CIBW_ARCHS_WINDOWS: ${{ matrix.arch == 'x86_64' && 'AMD64' || 'ARM64' }}
           CIBW_BEFORE_ALL_WINDOWS: choco install mingw -y
           CIBW_BUILD: cp314-*
-          CIBW_ENVIRONMENT_WINDOWS: CC=gcc FC=gfortran
+          CIBW_ENVIRONMENT_WINDOWS: >-
+            CMAKE_GENERATOR=Ninja
+            CC=gcc
+            FC=gfortran
+            CMAKE_ARGS="-DCMAKE_C_COMPILER=gcc -DCMAKE_Fortran_COMPILER=gfortran"
         run: |
           python -m pip install cibuildwheel==3.3.0
           python -m cibuildwheel --platform windows --output-dir dist
